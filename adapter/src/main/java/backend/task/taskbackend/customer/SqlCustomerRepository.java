@@ -4,7 +4,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 interface SqlCustomerRepository extends JpaRepository<CustomerSnapshot, Integer> {
-    CustomerSnapshot save(CustomerSnapshot customer);
 }
 @Repository
 class CustomerRepositoryImpl implements CustomerRepository{
