@@ -5,6 +5,7 @@ import backend.task.taskbackend.task.dto.TaskDto;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -18,7 +19,7 @@ class TaskController {
     }
 
     @PostMapping()
-    ResponseEntity<TaskDto> save(TaskCreateDto taskCreateDto){
+    ResponseEntity<TaskDto> save(@RequestBody TaskCreateDto taskCreateDto){
         return new ResponseEntity<>(taskFacade.save(taskCreateDto), HttpStatus.OK);
     }
 }

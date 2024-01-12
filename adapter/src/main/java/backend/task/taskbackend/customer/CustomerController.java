@@ -7,9 +7,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
+@RequestMapping("/api/customers")
 class CustomerController {
     private final CustomerFacade customerFacade;
 
@@ -19,10 +21,10 @@ class CustomerController {
 
     @PostMapping
     ResponseEntity<AuthenticationResponse> create(@RequestBody CustomerCreateDto customerCreateDto){
-        return new ResponseEntity<>(customerFacade.save(playerCreateDto), HttpStatus.OK);
+        return new ResponseEntity<>(customerFacade.save(customerCreateDto), HttpStatus.OK);
     }
     @PostMapping("/login")
-    ResponseEntity<AuthenticationResponse> login(@RequestBody CustomerLoginDto CustomerLoginDto){
-        return new ResponseEntity<>(customerFacade.login(playerLoginDto), HttpStatus.OK);
+    ResponseEntity<AuthenticationResponse> login(@RequestBody CustomerLoginDto customerLoginDto){
+        return new ResponseEntity<>(customerFacade.login(customerLoginDto), HttpStatus.OK);
     }
 }
