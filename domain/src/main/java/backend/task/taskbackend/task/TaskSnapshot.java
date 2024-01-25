@@ -1,6 +1,5 @@
 package backend.task.taskbackend.task;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;

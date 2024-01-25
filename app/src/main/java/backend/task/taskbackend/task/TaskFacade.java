@@ -19,4 +19,8 @@ public class TaskFacade {
     public TaskDto save(TaskCreateDto taskCreateDto){
         return taskMapper.toDto(taskRepository.save(taskFactory.from(taskCreateDto)).getSnapshot());
     }
+
+    public TaskDto[] getAllTasks(String email) {
+        return
+    }
 }

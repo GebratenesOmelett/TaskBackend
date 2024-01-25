@@ -20,4 +20,8 @@ class TaskController {
     ResponseEntity<TaskDto> save(@RequestBody TaskCreateDto taskCreateDto){
         return new ResponseEntity<>(taskFacade.save(taskCreateDto), HttpStatus.OK);
     }
+    @GetMapping("/get/{email}")
+    ResponseEntity<TaskDto[]> get(@RequestParam String email){
+        return new ResponseEntity<>(taskFacade.getAllTasks(email), HttpStatus.OK);
+    }
 }
