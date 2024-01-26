@@ -1,9 +1,13 @@
 package backend.task.taskbackend.customer.dto;
 
 import jakarta.persistence.*;
+import lombok.Builder;
+import lombok.Getter;
 
 @Entity
 @Table(name = "customer")
+@Getter
+@Builder
 public class SimpleCustomerSnapshot {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -1,7 +1,10 @@
 package backend.task.taskbackend.task;
 
+import backend.task.taskbackend.customer.dto.SimpleCustomerSnapshot;
+
+import java.util.List;
 import java.util.Optional;
 
-class TaskQueryRepository {
-//    Optional <TaskSnapshot[]> find
+interface TaskQueryRepository {
+    Optional<List<TaskSnapshot>> findAllByCustomerOrderByCreationDate(SimpleCustomerSnapshot customer);
 }
