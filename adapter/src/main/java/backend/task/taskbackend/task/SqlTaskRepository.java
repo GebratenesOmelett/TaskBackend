@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Optional;
 
 interface SqlTaskRepository extends JpaRepository<TaskSnapshot, Integer> {
-    Optional<List<TaskSnapshot>> findAllBy
+//    Optional<List<TaskSnapshot>> findAllBy
 }
 @Repository
 class TaskRepositoryImpl implements TaskRepository{

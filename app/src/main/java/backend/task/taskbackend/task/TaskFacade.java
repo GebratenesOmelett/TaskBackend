@@ -4,6 +4,8 @@ import backend.task.taskbackend.task.dto.TaskCreateDto;
 import backend.task.taskbackend.task.dto.TaskDto;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class TaskFacade {
     private final TaskRepository taskRepository;
@@ -20,7 +22,7 @@ public class TaskFacade {
         return taskMapper.toDto(taskRepository.save(taskFactory.from(taskCreateDto)).getSnapshot());
     }
 
-    public TaskDto[] getAllTasks(String email) {
-        return
+    public List<TaskDto> getAllTasks(String email) {
+        return null;
     }
 }

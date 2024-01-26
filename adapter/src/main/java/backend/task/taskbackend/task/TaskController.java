@@ -6,6 +6,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/tasks")
 @CrossOrigin
@@ -21,7 +23,7 @@ class TaskController {
         return new ResponseEntity<>(taskFacade.save(taskCreateDto), HttpStatus.OK);
     }
     @GetMapping("/get/{email}")
-    ResponseEntity<TaskDto[]> get(@RequestParam String email){
+    ResponseEntity<List<TaskDto>> get(@PathVariable String email){
         return new ResponseEntity<>(taskFacade.getAllTasks(email), HttpStatus.OK);
     }
 }

@@ -4,6 +4,7 @@ import backend.task.taskbackend.config.JwtService;
 import backend.task.taskbackend.config.dto.AuthenticationResponse;
 import backend.task.taskbackend.customer.dto.CustomerCreateDto;
 import backend.task.taskbackend.customer.dto.CustomerLoginDto;
+import backend.task.taskbackend.customer.dto.SimpleCustomerSnapshot;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -16,12 +17,14 @@ public class CustomerFacade {
     private final CustomerFactory customerFactory;
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
-    CustomerFacade(CustomerRepository customerRepository, CustomerQueryRepository customerQueryRepository, CustomerFactory customerFactory, JwtService jwtService, AuthenticationManager authenticationManager) {
+    private final CustomerMapper customerMapper;
+    CustomerFacade(CustomerRepository customerRepository, CustomerQueryRepository customerQueryRepository, CustomerFactory customerFactory, JwtService jwtService, AuthenticationManager authenticationManager, CustomerMapper customerMapper) {
         this.customerRepository = customerRepository;
         this.customerQueryRepository = customerQueryRepository;
         this.customerFactory = customerFactory;
         this.jwtService = jwtService;
         this.authenticationManager = authenticationManager;
+        this.customerMapper = customerMapper;
     }
 
     public AuthenticationResponse save(CustomerCreateDto customerCreateDto){
@@ -44,5 +47,8 @@ public class CustomerFacade {
     public CustomerSnapshot getCustomerSnapshotByEmail(String email){
         return customerQueryRepository.findCustomerSnapshotByEmail(email)
                 .orElseThrow(()->new UsernameNotFoundException("Not found"));
+    }
+    public SimpleCustomerSnapshot getSimpleCustomerSnapshotByEmail(String email){
+        return customerMapper.toSimpleCustomerSnapshot(getCustomerSnapshotByEmail(email));
     }
 }
