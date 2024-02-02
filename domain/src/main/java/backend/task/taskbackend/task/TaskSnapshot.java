@@ -21,7 +21,9 @@ class TaskSnapshot {
     private String importance;
     private String description;
     @CreationTimestamp
+    @Temporal(TemporalType.DATE)
     private Date creationDate;
+    @Temporal(TemporalType.DATE)
     private Date deadLine;
     @ManyToOne
     private SimpleCustomerSnapshot customer;
