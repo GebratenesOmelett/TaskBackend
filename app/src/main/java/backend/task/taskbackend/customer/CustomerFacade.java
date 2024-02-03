@@ -5,6 +5,8 @@ import backend.task.taskbackend.config.dto.AuthenticationResponse;
 import backend.task.taskbackend.customer.dto.CustomerCreateDto;
 import backend.task.taskbackend.customer.dto.CustomerLoginDto;
 import backend.task.taskbackend.customer.dto.SimpleCustomerSnapshot;
+import backend.task.taskbackend.customer.exception.CustomerNotFoundException;
+import backend.task.taskbackend.customer.validation.CustomerValidation;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -18,16 +20,19 @@ public class CustomerFacade {
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
     private final CustomerMapper customerMapper;
-    CustomerFacade(CustomerRepository customerRepository, CustomerQueryRepository customerQueryRepository, CustomerFactory customerFactory, JwtService jwtService, AuthenticationManager authenticationManager, CustomerMapper customerMapper) {
+    private final CustomerValidation customerValidation;
+    CustomerFacade(CustomerRepository customerRepository, CustomerQueryRepository customerQueryRepository, CustomerFactory customerFactory, JwtService jwtService, AuthenticationManager authenticationManager, CustomerMapper customerMapper, CustomerValidation customerValidation) {
         this.customerRepository = customerRepository;
         this.customerQueryRepository = customerQueryRepository;
         this.customerFactory = customerFactory;
         this.jwtService = jwtService;
         this.authenticationManager = authenticationManager;
         this.customerMapper = customerMapper;
+        this.customerValidation = customerValidation;
     }
 
     public AuthenticationResponse save(CustomerCreateDto customerCreateDto){
+        customerValidation.registerValidation(customerCreateDto);
         Customer customer = customerFactory.from(customerCreateDto);
         customerRepository.save(customer);
         var jwtToken  = jwtService.generateToken(customer.getSnapshot());
@@ -46,7 +51,7 @@ public class CustomerFacade {
     }
     public CustomerSnapshot getCustomerSnapshotByEmail(String email){
         return customerQueryRepository.findCustomerSnapshotByEmail(email)
-                .orElseThrow(()->new UsernameNotFoundException("Not found"));
+                .orElseThrow(()->new CustomerNotFoundException("Not found"));
     }
     public SimpleCustomerSnapshot getSimpleCustomerSnapshotByEmail(String email){
         return customerMapper.toSimpleCustomerSnapshot(getCustomerSnapshotByEmail(email));
