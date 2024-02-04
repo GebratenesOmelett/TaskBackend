@@ -1,6 +1,7 @@
 package backend.task.taskbackend.config;
 
 import backend.task.taskbackend.customer.CustomerQueryRepository;
+import backend.task.taskbackend.customer.exception.CustomerLoginException;
 import backend.task.taskbackend.customer.exception.CustomerNotFoundException;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -24,7 +25,7 @@ public class ApplicationConfig {
     @Bean
     public UserDetailsService userDetailsService(){
         return username -> customerQueryRepository.findCustomerSnapshotByEmail(username)
-                .orElseThrow(() -> new CustomerNotFoundException(username));
+                .orElseThrow(() -> new CustomerLoginException());
     }
     @Bean
     public PasswordEncoder passwordEncoder() {

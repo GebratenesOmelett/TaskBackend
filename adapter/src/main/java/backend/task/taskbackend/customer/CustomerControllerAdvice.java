@@ -1,6 +1,7 @@
 package backend.task.taskbackend.customer;
 
 import backend.task.taskbackend.customer.exception.CustomerAlreadyExistException;
+import backend.task.taskbackend.customer.exception.CustomerLoginException;
 import backend.task.taskbackend.customer.exception.CustomerNotFoundException;
 import backend.task.taskbackend.customer.exception.CustomerPasswordRepeatException;
 import org.springframework.http.HttpHeaders;
@@ -29,4 +30,5 @@ class CustomerControllerAdvice extends ResponseEntityExceptionHandler {
         String response = ex.getMessage();
         return  handleExceptionInternal(ex, response, new HttpHeaders(), HttpStatus.BAD_REQUEST, request);
     }
+
 }
