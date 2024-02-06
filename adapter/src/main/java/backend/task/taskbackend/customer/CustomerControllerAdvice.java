@@ -4,9 +4,12 @@ import backend.task.taskbackend.customer.exception.CustomerAlreadyExistException
 import backend.task.taskbackend.customer.exception.CustomerLoginException;
 import backend.task.taskbackend.customer.exception.CustomerNotFoundException;
 import backend.task.taskbackend.customer.exception.CustomerPasswordRepeatException;
+import io.jsonwebtoken.ExpiredJwtException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.AccessDeniedException;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
@@ -16,19 +19,21 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 class CustomerControllerAdvice extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler(value = CustomerNotFoundException.class)
-    ResponseEntity<Object> CustomerNotFound(RuntimeException ex, WebRequest request){
+    ResponseEntity<Object> CustomerNotFound(RuntimeException ex, WebRequest request) {
         String response = ex.getMessage();
-        return  handleExceptionInternal(ex, response, new HttpHeaders(), HttpStatus.NOT_FOUND, request);
+        return handleExceptionInternal(ex, response, new HttpHeaders(), HttpStatus.NOT_FOUND, request);
     }
+
     @ExceptionHandler(value = CustomerAlreadyExistException.class)
-    ResponseEntity<Object> CustomerEmailAlreadyExist(RuntimeException ex, WebRequest request){
+    ResponseEntity<Object> CustomerEmailAlreadyExist(RuntimeException ex, WebRequest request) {
         String response = ex.getMessage();
-        return  handleExceptionInternal(ex, response, new HttpHeaders(), HttpStatus.BAD_REQUEST, request);
+        return handleExceptionInternal(ex, response, new HttpHeaders(), HttpStatus.BAD_REQUEST, request);
     }
+
     @ExceptionHandler(value = CustomerPasswordRepeatException.class)
-    ResponseEntity<Object> CustomerPasswordRepeatException(RuntimeException ex, WebRequest request){
+    ResponseEntity<Object> CustomerPasswordRepeatException(RuntimeException ex, WebRequest request) {
         String response = ex.getMessage();
-        return  handleExceptionInternal(ex, response, new HttpHeaders(), HttpStatus.BAD_REQUEST, request);
+        return handleExceptionInternal(ex, response, new HttpHeaders(), HttpStatus.BAD_REQUEST, request);
     }
 
 }
