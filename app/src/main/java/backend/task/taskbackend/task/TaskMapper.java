@@ -6,7 +6,8 @@ import org.springframework.stereotype.Service;
 @Service
 class TaskMapper {
     TaskDto toDto(TaskSnapshot taskSnapshot){
-        return new TaskDto(taskSnapshot.getTitle(),
+        return new TaskDto(taskSnapshot.getId(),
+                taskSnapshot.getTitle(),
                 taskSnapshot.getImportance(),
                 taskSnapshot.getDescription(),
                 taskSnapshot.getCreationDate(),

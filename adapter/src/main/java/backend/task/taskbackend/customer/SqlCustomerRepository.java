@@ -26,4 +26,5 @@ class CustomerRepositoryImpl implements CustomerRepository, CustomerQueryReposit
     public Optional<CustomerSnapshot> findCustomerSnapshotByEmail(String email) {
         return sqlCustomerRepository.findCustomerSnapshotByEmail(email);
     }
+
 }

@@ -7,4 +7,5 @@ import java.util.Optional;
 
 interface TaskQueryRepository {
     Optional<List<TaskSnapshot>> findAllByCustomerOrderByCreationDate(SimpleCustomerSnapshot customer);
+    Optional<TaskSnapshot> findById(int id);
 }

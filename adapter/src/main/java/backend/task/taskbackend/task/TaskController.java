@@ -26,4 +26,8 @@ class TaskController {
     ResponseEntity<List<TaskDto>> get(@PathVariable String email){
         return new ResponseEntity<>(taskFacade.getAllTasks(email), HttpStatus.OK);
     }
+    @DeleteMapping("/{id}")
+    ResponseEntity<TaskDto> delete(@PathVariable int id){
+        return new ResponseEntity<>(taskFacade.delete(id), HttpStatus.OK);
+    }
 }

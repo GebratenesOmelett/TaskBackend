@@ -4,11 +4,11 @@ import backend.task.taskbackend.customer.CustomerFacade;
 import backend.task.taskbackend.customer.dto.SimpleCustomerSnapshot;
 import backend.task.taskbackend.task.dto.TaskCreateDto;
 import backend.task.taskbackend.task.dto.TaskDto;
+import backend.task.taskbackend.task.exception.TaskNotFoundException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.Collections;
-import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -44,5 +44,16 @@ public class TaskFacade {
                             Collections.reverse(list);
                             return list;
                         }));
+    }
+    public TaskSnapshot getTaskSnapshotById(int id){
+        return taskQueryRepository.findById(id).
+                orElseThrow(() -> new TaskNotFoundException(id));
+    }
+
+    public TaskDto delete(int id) {
+        TaskDto taskDto = taskMapper.toDto(getTaskSnapshotById(id));
+        taskRepository.delete(id);
+        return taskDto;
+
     }
 }
