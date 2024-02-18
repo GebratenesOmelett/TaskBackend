@@ -5,6 +5,5 @@ import java.util.Optional;
 
 interface TaskRepository {
     Task save(Task task);
-
     void delete(int id);
 }
