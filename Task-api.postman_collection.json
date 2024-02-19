@@ -73,7 +73,7 @@
 					"bearer": [
 						{
 							"key": "token",
-							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0dEB3cC5wbCIsImlhdCI6MTcwNjI3NDAyNSwiZXhwIjoxNzA2MzYwNDI1fQ.rVlQV72gHJkyrrnAZurOrGE39qxf_ikzqfsOZAp-9R4",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0dEB3cC5wbCIsImlhdCI6MTcwODI4NjQ2MCwiZXhwIjoxNzA4MzcyODYwfQ.p2OD1HLtCH6bqkp0sxBEQMgQUHy0929U8G_nZAfes0k",
 							"type": "string"
 						}
 					]
@@ -144,7 +144,7 @@
 					"bearer": [
 						{
 							"key": "token",
-							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0dEB3cC5wbCIsImlhdCI6MTcwNzMzNTk4MiwiZXhwIjoxNzA3NDIyMzgyfQ.iHWbTucF3hcEwSaQNarC2gaGqSyucsx5y0LXGpQg62g",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0dEB3cC5wbCIsImlhdCI6MTcwODIwNTQ5MywiZXhwIjoxNzA4MjkxODkzfQ.LO3AXyoiTR9l_m6DZxPdNcR0-rfCpq0_mt1SF2As1mE",
 							"type": "string"
 						}
 					]
@@ -152,7 +152,7 @@
 				"method": "DELETE",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:8080/api/tasks/2",
+					"raw": "http://localhost:8080/api/tasks/24",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -161,7 +161,7 @@
 					"path": [
 						"api",
 						"tasks",
-						"2"
+						"24"
 					]
 				}
 			},
