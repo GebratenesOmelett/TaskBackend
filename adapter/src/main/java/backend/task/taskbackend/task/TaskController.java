@@ -28,7 +28,7 @@ class TaskController {
         }
         return new ResponseEntity<>(taskFacade.save(taskCreateDto), HttpStatus.OK);
     }
-    @GetMapping("/get/{email}")
+    @GetMapping("/{email}")
     ResponseEntity<List<TaskDto>> get(@PathVariable String email){
         return new ResponseEntity<>(taskFacade.getAllTasks(email), HttpStatus.OK);
     }
