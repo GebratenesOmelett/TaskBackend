@@ -51,7 +51,7 @@ public class CustomerFacade {
     }
     public CustomerSnapshot getCustomerSnapshotByEmail(String email){
         return customerQueryRepository.findCustomerSnapshotByEmail(email)
-                .orElseThrow(()->new CustomerNotFoundException("Not found"));
+                .orElseThrow(()->new CustomerNotFoundException(email));
     }
     public SimpleCustomerSnapshot getSimpleCustomerSnapshotByEmail(String email){
         return customerMapper.toSimpleCustomerSnapshot(getCustomerSnapshotByEmail(email));

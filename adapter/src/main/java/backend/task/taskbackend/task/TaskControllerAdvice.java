@@ -1,6 +1,7 @@
 package backend.task.taskbackend.task;
 
 import backend.task.taskbackend.task.exception.TaskNotFoundException;
+import backend.task.taskbackend.task.exception.TaskValidationException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,6 +14,11 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 class TaskControllerAdvice extends ResponseEntityExceptionHandler {
     @ExceptionHandler(value = TaskNotFoundException.class)
     ResponseEntity<Object> CustomerNotFound(RuntimeException ex, WebRequest request) {
+        String response = ex.getMessage();
+        return handleExceptionInternal(ex, response, new HttpHeaders(), HttpStatus.NOT_FOUND, request);
+    }
+    @ExceptionHandler(value = TaskValidationException.class)
+    ResponseEntity<Object> TaskValidationException(RuntimeException ex, WebRequest request) {
         String response = ex.getMessage();
         return handleExceptionInternal(ex, response, new HttpHeaders(), HttpStatus.NOT_FOUND, request);
     }

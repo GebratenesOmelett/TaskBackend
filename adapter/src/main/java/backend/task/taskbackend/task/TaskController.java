@@ -1,9 +1,12 @@
 package backend.task.taskbackend.task;
 
+import backend.task.taskbackend.customer.exception.CustomerValidationException;
 import backend.task.taskbackend.task.dto.TaskCreateDto;
 import backend.task.taskbackend.task.dto.TaskDto;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -19,7 +22,10 @@ class TaskController {
     }
 
     @PostMapping()
-    ResponseEntity<TaskDto> save(@RequestBody TaskCreateDto taskCreateDto){
+    ResponseEntity<TaskDto> save(@RequestBody @Valid TaskCreateDto taskCreateDto, BindingResult errors){
+        if(errors.hasErrors()){
+            throw new CustomerValidationException(errors);
+        }
         return new ResponseEntity<>(taskFacade.save(taskCreateDto), HttpStatus.OK);
     }
     @GetMapping("/get/{email}")
