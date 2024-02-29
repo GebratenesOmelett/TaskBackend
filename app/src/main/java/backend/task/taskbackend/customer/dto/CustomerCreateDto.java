@@ -11,7 +11,7 @@ public class CustomerCreateDto {
     @Size(min = 8, message = "Password must be at least 8 characters long")
     private final String password;
     private final String passwordRepeat;
-    CustomerCreateDto(String email, String password, String passwordRepeat) {
+    public CustomerCreateDto(String email, String password, String passwordRepeat) {
         this.email = email;
         this.password = password;
         this.passwordRepeat = passwordRepeat;
