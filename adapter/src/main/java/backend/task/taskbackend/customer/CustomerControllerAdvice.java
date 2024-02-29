@@ -38,6 +38,6 @@ class CustomerControllerAdvice extends ResponseEntityExceptionHandler {
     @ExceptionHandler(value = CustomerLoginException.class)
     ResponseEntity<Object> CustomerLoginException(RuntimeException ex, WebRequest request) {
         String response = ex.getMessage();
-        return handleExceptionInternal(ex, response, new HttpHeaders(), HttpStatus.BAD_REQUEST, request);
+        return handleExceptionInternal(ex, response, new HttpHeaders(), HttpStatus.FORBIDDEN, request);
     }
 }
