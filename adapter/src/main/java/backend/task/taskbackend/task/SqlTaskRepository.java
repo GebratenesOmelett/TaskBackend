@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Optional;
 
 interface SqlTaskRepository extends JpaRepository<TaskSnapshot, Integer> {
-    Optional<List<TaskSnapshot>> findAllByCustomerOrderByCreationDate(SimpleCustomerSnapshot customer);
+    Optional<List<TaskSnapshot>> findAllByCustomerOrderByCreationDateAsc(SimpleCustomerSnapshot customer);
 
 }
 @Repository
@@ -30,7 +30,7 @@ class TaskRepositoryImpl implements TaskRepository, TaskQueryRepository{
 
     @Override
     public Optional<List<TaskSnapshot>> findAllByCustomerOrderByCreationDate(SimpleCustomerSnapshot customer) {
-        return sqlTaskRepository.findAllByCustomerOrderByCreationDate(customer);
+        return sqlTaskRepository.findAllByCustomerOrderByCreationDateAsc(customer);
     }
 
     @Override

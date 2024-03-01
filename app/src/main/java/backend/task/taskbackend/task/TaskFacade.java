@@ -35,17 +35,13 @@ public class TaskFacade {
     public List<TaskDto> getAllTasks(String email) {
         SimpleCustomerSnapshot customer = customerFacade.getSimpleCustomerSnapshotByEmail(email);
         return taskQueryRepository.findAllByCustomerOrderByCreationDate(customer)
-                .orElseThrow(() -> new UsernameNotFoundException(""))
+                .orElseThrow(() -> new UsernameNotFoundException(email))
                 .stream()
                 .map(taskMapper::toDto)
-                .collect(Collectors.collectingAndThen(
-                        Collectors.toList(),
-                        list -> {
-                            Collections.reverse(list);
-                            return list;
-                        }));
+                .collect(Collectors.toList());
     }
-    public TaskSnapshot getTaskSnapshotById(int id){
+
+    public TaskSnapshot getTaskSnapshotById(int id) {
         return taskQueryRepository.findById(id).
                 orElseThrow(() -> new TaskNotFoundException(id));
     }

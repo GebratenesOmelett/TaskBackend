@@ -21,7 +21,7 @@ public class TaskCreateDto {
     @DateDeadlineValidation
     private final Date deadLine;
     private final String email;
-    TaskCreateDto(String title, String importance, String description, Date deadLine, String email) {
+    public TaskCreateDto(String title, String importance, String description, Date deadLine, String email) {
         this.title = title;
         this.importance = importance;
         this.description = description;
