@@ -38,7 +38,7 @@ public class TaskFacade {
                 .orElseThrow(() -> new UsernameNotFoundException(email))
                 .stream()
                 .map(taskMapper::toDto)
-                .collect(Collectors.toList());
+                .toList();
     }
 
     public TaskSnapshot getTaskSnapshotById(int id) {

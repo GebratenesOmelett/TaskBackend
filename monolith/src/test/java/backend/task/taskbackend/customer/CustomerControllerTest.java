@@ -77,6 +77,21 @@ class CustomerControllerTest {
                 .andExpect(status().is4xxClientError()).andReturn();
 
     }
+    @Test
+    @DisplayName("createShouldReturnEmailValidationException")
+    void createCustomerReturnEmailExceptionEmpty() throws Exception {
+        CustomerCreateDto customerCreateDto = new CustomerCreateDto(
+                null,
+                "Testtest",
+                "Testtest"
+        );
+        mockMvc.perform(post("/api/customers")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(customerCreateDto)))
+                .andExpect(result -> Assertions.assertEquals("Email is not valid", result.getResolvedException().getMessage()))
+                .andExpect(status().is4xxClientError()).andReturn();
+
+    }
 
     @Test
     @DisplayName("createShouldReturnPasswordValidationException")

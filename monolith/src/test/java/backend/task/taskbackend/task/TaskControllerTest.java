@@ -5,6 +5,7 @@ import backend.task.taskbackend.customer.CustomerFacade;
 import backend.task.taskbackend.customer.dto.CustomerCreateDto;
 import backend.task.taskbackend.customer.dto.CustomerLoginDto;
 import backend.task.taskbackend.task.dto.TaskCreateDto;
+import backend.task.taskbackend.task.exception.TaskNotFoundException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,8 +21,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import static org.hamcrest.Matchers.is;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @SpringBootTest
@@ -142,7 +142,7 @@ class TaskControllerTest {
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(taskCreateDtoBlank))
                         .header("Authorization", "Bearer " + login.token()))
-                .andExpect(result -> Assertions.assertEquals("title must not be blank", result.getResolvedException().getMessage()))
+                .andExpect(result -> Assertions.assertEquals("title must not be empty", result.getResolvedException().getMessage()))
                 .andExpect(status().is4xxClientError()).andReturn();
     }
 
@@ -180,7 +180,7 @@ class TaskControllerTest {
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(taskCreateDtoBlank))
                         .header("Authorization", "Bearer " + login.token()))
-                .andExpect(result -> Assertions.assertEquals("importance must not be blank", result.getResolvedException().getMessage()))
+                .andExpect(result -> Assertions.assertEquals("importance must not be empty", result.getResolvedException().getMessage()))
                 .andExpect(status().is4xxClientError()).andReturn();
     }
 
@@ -208,16 +208,9 @@ class TaskControllerTest {
                 new Date(System.currentTimeMillis() + 24 * 60 * 60 * 1000),
                 "Test@gmail.com"
         );
-        this.mockMvc.perform(post("/api/tasks")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(taskCreateDto))
-                        .header("Authorization", "Bearer " + login.token()))
-                .andExpect(status().is2xxSuccessful()).andReturn();
-        this.mockMvc.perform(post("/api/tasks")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(taskCreateDto2))
-                        .header("Authorization", "Bearer " + login.token()))
-                .andExpect(status().is2xxSuccessful()).andReturn();
+
+        taskFacade.save(taskCreateDto);
+        taskFacade.save(taskCreateDto2);
 
         Assertions.assertNotNull(taskFacade.getTaskSnapshotById(1));
         Assertions.assertNotNull(taskFacade.getTaskSnapshotById(2));
@@ -239,4 +232,72 @@ class TaskControllerTest {
                 .andExpect(jsonPath("$[1].deadLine", is(dateFormat.format(new Date(System.currentTimeMillis() + 24 * 60 * 60 * 1000)))))
                 .andExpect(status().is2xxSuccessful()).andReturn();
     }
+    @Test
+    @DisplayName("getShouldReturnCustomerNotFoundException")
+    void getListTasksReturnNotFoundException() throws Exception {
+        CustomerLoginDto customerLoginDto = new CustomerLoginDto(
+                "Test@gmail.com",
+                "Testtest"
+        );
+        AuthenticationResponse login = customerFacade.login(customerLoginDto);
+
+        this.mockMvc.perform(get("/api/tasks/{email}", "WrongEmail@gmail.com")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .header("Authorization", "Bearer " + login.token()))
+                .andExpect(result -> Assertions.assertEquals("There is no customer with : WrongEmail@gmail.com", result.getResolvedException().getMessage()))
+                .andExpect(status().is4xxClientError()).andReturn();
+    }
+    @Test
+    @DisplayName("deleteTaskReturnTask")
+    void deleteTask() throws Exception {
+        CustomerLoginDto customerLoginDto = new CustomerLoginDto(
+                "Test@gmail.com",
+                "Testtest"
+        );
+        AuthenticationResponse login = customerFacade.login(customerLoginDto);
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+
+        TaskCreateDto taskCreateDto = new TaskCreateDto(
+                "Test",
+                "3",
+                "TestTestTest",
+                new Date(System.currentTimeMillis() + 24 * 60 * 60 * 1000),
+                "Test@gmail.com"
+        );
+        taskFacade.save(taskCreateDto);
+
+        Assertions.assertNotNull(taskFacade.getTaskSnapshotById(1));
+
+        this.mockMvc.perform(delete("/api/tasks/{id}", 1)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .header("Authorization", "Bearer " + login.token()))
+                .andExpect(jsonPath("$.id", is(1)))
+                .andExpect(jsonPath("$.title", is("Test")))
+                .andExpect(jsonPath("$.importance", is("3")))
+                .andExpect(jsonPath("$.description", is("TestTestTest")))
+                .andExpect(jsonPath("$.creationDate", is(dateFormat.format(new Date()))))
+                .andExpect(jsonPath("$.deadLine", is(dateFormat.format(new Date(System.currentTimeMillis() + 24 * 60 * 60 * 1000)))))
+                .andExpect(status().is2xxSuccessful()).andReturn();
+
+        Assertions.assertThrows(TaskNotFoundException.class, () -> taskFacade.getTaskSnapshotById(1));
+    }
+
+    @Test
+    @DisplayName("deleteTaskReturnTaskNotFoundException")
+    void deleteTaskReturnNotFoundException() throws Exception {
+        CustomerLoginDto customerLoginDto = new CustomerLoginDto(
+                "Test@gmail.com",
+                "Testtest"
+        );
+        AuthenticationResponse login = customerFacade.login(customerLoginDto);
+
+        Assertions.assertThrows(TaskNotFoundException.class, () -> taskFacade.getTaskSnapshotById(1));
+
+        this.mockMvc.perform(delete("/api/tasks/{id}", 1)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .header("Authorization", "Bearer " + login.token()))
+                .andExpect(result -> Assertions.assertEquals("Task with that id does not exist: 1", result.getResolvedException().getMessage()))
+                .andExpect(status().is4xxClientError()).andReturn();
+    }
+
 }
