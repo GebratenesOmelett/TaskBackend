@@ -9,11 +9,14 @@
 		{
 			"name": "Create new customer",
 			"request": {
+				"auth": {
+					"type": "noauth"
+				},
 				"method": "POST",
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"email\": \"testt@wp.pl\",\n    \"password\": \"wwwwwwww\",\n    \"passwordRepeat\": \"wwwwwwww\"\n}",
+					"raw": "{\n    \"email\": \"Test@gmail.com\",\n    \"password\": \"wwwwwwww\",\n    \"passwordRepeat\": \"wwwwwwww\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -38,11 +41,14 @@
 		{
 			"name": "Login",
 			"request": {
+				"auth": {
+					"type": "noauth"
+				},
 				"method": "POST",
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"email\": \"testt@wp.pl\",\n    \"password\": \"wwwwwwww\"\n}",
+					"raw": "{\n    \"email\": \"Test@gmail.com\",\n    \"password\": \"wwwwwwww\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -73,7 +79,7 @@
 					"bearer": [
 						{
 							"key": "token",
-							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0dEB3cC5wbCIsImlhdCI6MTcwODI4NjQ2MCwiZXhwIjoxNzA4MzcyODYwfQ.p2OD1HLtCH6bqkp0sxBEQMgQUHy0929U8G_nZAfes0k",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJUZXN0QGdtYWlsLmNvbSIsImlhdCI6MTcwOTMyNDg5MywiZXhwIjoxNzA5NDExMjkzfQ.g127NjBA-JMHmwZd_zreUpF3EZCsws7uju0VFGgzGC8",
 							"type": "string"
 						}
 					]
@@ -82,7 +88,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"title\": \"Homework\",\n    \"importance\": \"Normal\",\n    \"description\": \"HOmework\",\n    \"deadLine\": \"2024-05-13\",\n    \"email\": \"testt@wp.pl\"\n}",
+					"raw": "{\n    \"title\": \"Test\",\n    \"importance\": 3,\n    \"description\": \"Test\",\n    \"deadLine\": \"2025-03-05\",\n    \"email\": \"Test@gmail.com\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -112,7 +118,7 @@
 					"bearer": [
 						{
 							"key": "token",
-							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0dEB3cC5wbCIsImlhdCI6MTcwNzM5NjU1NCwiZXhwIjoxNzA3NDgyOTU0fQ.VsSWpmr3ZAVLgA6sJAiXDZ46Ohmf1hpU3J5NhoSkjhU",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJUZXN0QGdtYWlsLmNvbSIsImlhdCI6MTcwOTMyMTk0NSwiZXhwIjoxNzA5NDA4MzQ1fQ.4gz45Y3D8wZAw1GJ3VGLwxtQCIbq4lUhoSYUZek0Gt4",
 							"type": "string"
 						}
 					]
@@ -120,7 +126,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:8080/api/tasks/get/testt@wp.pl",
+					"raw": "http://localhost:8080/api/tasks/Test@gmail.com",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -129,8 +135,7 @@
 					"path": [
 						"api",
 						"tasks",
-						"get",
-						"testt@wp.pl"
+						"Test@gmail.com"
 					]
 				}
 			},
@@ -144,7 +149,7 @@
 					"bearer": [
 						{
 							"key": "token",
-							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0dEB3cC5wbCIsImlhdCI6MTcwODIwNTQ5MywiZXhwIjoxNzA4MjkxODkzfQ.LO3AXyoiTR9l_m6DZxPdNcR0-rfCpq0_mt1SF2As1mE",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJUZXN0QGdtYWlsLmNvbSIsImlhdCI6MTcwOTM3NDIyMiwiZXhwIjoxNzA5NDYwNjIyfQ.tZbrYjpNWAe9jbAQOvX4BRnXxD66y4psbJOFIcUChgY",
 							"type": "string"
 						}
 					]
@@ -152,7 +157,7 @@
 				"method": "DELETE",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:8080/api/tasks/24",
+					"raw": "http://localhost:8080/api/tasks/1",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -161,7 +166,7 @@
 					"path": [
 						"api",
 						"tasks",
-						"24"
+						"1"
 					]
 				}
 			},
