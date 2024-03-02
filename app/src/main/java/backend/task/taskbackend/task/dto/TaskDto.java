@@ -3,7 +3,6 @@ package backend.task.taskbackend.task.dto;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Getter;
 import lombok.Setter;
-import org.hibernate.annotations.CreationTimestamp;
 
 import java.util.Date;
 @Getter

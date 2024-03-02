@@ -1,10 +1,8 @@
 package backend.task.taskbackend.task.validation;
 
-import backend.task.taskbackend.task.dto.TaskCreateDto;
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
 
-import java.time.LocalDate;
 import java.util.Date;
 
 public class DateDeadline implements ConstraintValidator<DateDeadlineValidation, Date> {
